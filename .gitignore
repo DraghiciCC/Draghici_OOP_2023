@@ -1,0 +1,6 @@
+#Add aditional VS files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.vs
