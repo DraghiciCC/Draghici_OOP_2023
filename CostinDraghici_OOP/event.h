@@ -1,31 +1,65 @@
 #pragma once
-#ifndef EVENT_H
-#define EVENT_H
-
+#include <iostream>
 #include <string>
+#include <sstream>
+#include "room.h"
+#include "date.h"
 
 class Event {
 private:
-	char* name;
-	int* dateAndTime;
-	int EventID;
-	static int nextEventID;
+	unsigned int eventId = 0;
+	char* name = nullptr;
+	Date* startTime = nullptr;
+	unsigned int runtime = 0;
+	Room* room = nullptr;
+
+	static unsigned int TOTAL_EVENTS;
+
+	// - Setters
+
+	void setEventId(unsigned int eventId);
+	void setName(const char* name);
+	void setStartTime(Date* startTime);
+	void setRuntime(unsigned int runtime);
+	void setRoom(Room* room);
 
 public:
-	Event(const std::string& name, int* dateAndTime);
-	
+	// - Public interface
+
+	// - Getters
+	unsigned int getEventId();
+	char* getName();
+	Date* getStartTime();
+	unsigned int getRuntime();
+	Room* getRoom();
+
+	// - Constructor / Destructor
+
+	Event(const Event& anotherEvent);
+	// make an event from already existing data
+	Event(const char* name, Date& startTime, unsigned int runtime, Room& room);
+	// make an empty event
+	Event();
 	~Event();
 
-	std::string getName() const;
-	int getEventID() const;
-	int getDateAndTime(int index) const;
+	// - Operators
 
-	static int generateNextEventID();
+		// copy assignment
 
+	Event operator=(const Event& anotherRoom);
+
+	// typecast operator
+
+	explicit operator std::string();
+
+	// compare operators
+
+	bool operator==(const Event& anotherEvent);
+	bool operator!=(const Event& anotherEvent);
+
+	// stream operators
+
+	friend std::ostream& operator << (std::ostream& out, const Event& event);
+	friend std::istream& operator >> (std::istream& in, Event& event);
 
 };
-
-
-
-#endif // !EVENT_H
-
