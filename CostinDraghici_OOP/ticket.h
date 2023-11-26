@@ -1,26 +1,33 @@
 #pragma once
-#ifndef TICKET_H
-#define TICKET_H
+#include <stdlib.h>
+#include <time.h>
+#include "location.h"
 
-#include <string>
 
 class Ticket {
-private:
-    char* type;
-    int* ticketID;
-    int validityDuration;
-    static int validTickets;
+public:
+	char* ticketId;
+	Event* event;
+
+	static unsigned int* VALID_TICKETS;
+	static unsigned int NO_VALID_TICKETS;
+
+	// - Setter
+	void setEvent(Event* event);
+	void setTicketId(unsigned int ticketId);
+
+	// - Private interface
+
+	static char* generateId();
 
 public:
-    Ticket(const std::string& type, const int* ticketID);
 
-    ~Ticket();
+	// - Getter
+	unsigned int getTicketId();
+	Event* getEvent();
 
-    std::string getType() const;
-    int getTicketID(int index) const;
-    int getValidityDuration() const;
+	// - Constructors / Destructor
+	Ticket();
+	~Ticket();
 
-    static bool validateTicket(const Ticket& ticket);
 };
-
-#endif // TICKET_H
